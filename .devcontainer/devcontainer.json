@@ -1,0 +1,28 @@
+{
+  "name": "RT-ED Exam (PHP + MySQL)",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "shutdownAction": "stopCompose",
+
+  "forwardPorts": [8000],
+  "portsAttributes": {
+    "8000": {
+      "label": "RT Exam Admin",
+      "onAutoForward": "openBrowser",
+      "visibility": "public"
+    }
+  },
+
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  "postStartCommand": "bash .devcontainer/start-server.sh",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "bmewburn.vscode-intelephense-client",
+        "cweijan.vscode-mysql-client2"
+      ]
+    }
+  }
+}

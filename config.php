@@ -13,12 +13,14 @@ declare(strict_types=1);
 
 // ---------------------------------------------------------------------------
 // Database connection
+// Edit the fallback values directly, or set matching env vars (useful for
+// Docker / Codespaces / CI).
 // ---------------------------------------------------------------------------
-define('DB_HOST',     '127.0.0.1');
-define('DB_PORT',     3306);
-define('DB_NAME',     'rt_exam');
-define('DB_USER',     'rt_exam');
-define('DB_PASSWORD', 'CHANGE_ME');
+define('DB_HOST',     getenv('DB_HOST')     ?: '127.0.0.1');
+define('DB_PORT',     (int)(getenv('DB_PORT') ?: 3306));
+define('DB_NAME',     getenv('DB_NAME')     ?: 'rt_exam');
+define('DB_USER',     getenv('DB_USER')     ?: 'rt_exam');
+define('DB_PASSWORD', getenv('DB_PASSWORD') ?: 'CHANGE_ME');
 
 // ---------------------------------------------------------------------------
 // Exam behavior
@@ -51,9 +53,10 @@ define('LEAD_PHONE_COLUMN', 'phone');
 
 // ---------------------------------------------------------------------------
 // Admin HTTP Basic auth. Change ADMIN_PASS before deploying.
+// Fallbacks below; env vars ADMIN_USER / ADMIN_PASS override when set.
 // ---------------------------------------------------------------------------
-define('ADMIN_USER', 'admin');
-define('ADMIN_PASS', 'CHANGE_ME');
+define('ADMIN_USER', getenv('ADMIN_USER') ?: 'admin');
+define('ADMIN_PASS', getenv('ADMIN_PASS') ?: 'CHANGE_ME');
 
 // ---------------------------------------------------------------------------
 // Helpers

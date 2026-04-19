@@ -18,6 +18,25 @@ migration will be required when those phases land.
 | `generate_code.php`  | Admin-only JSON endpoint that mints an access code for a given lead.    |
 | `admin_generate.php` | Minimal form that calls the endpoint and displays the generated code.   |
 
+## Try it live in GitHub Codespaces (no install)
+
+The repo ships with a `.devcontainer/` that provisions PHP 8.2 + MySQL 8 and
+auto-imports the schema. Open a Codespace and you get a public HTTPS URL to the
+admin form in ~1 minute.
+
+1. On GitHub: **Code → Codespaces → Create codespace on main**.
+2. Wait for the container to build. A terminal tab shows the setup script
+   installing the MySQL client, importing `schema.sql`, and seeding a demo lead.
+3. Codespaces pops a notification for port `8000` — click **Open in Browser**,
+   or open the **Ports** panel and click the globe icon.
+4. Log in to the Basic-auth prompt with **`admin`** / **`demo_admin`**.
+5. Enter lead ID **`1`** (pre-seeded) and press *Generate code*.
+
+Credentials used by the Codespace are defined as env vars in
+`.devcontainer/docker-compose.yml` (`demo_pass` / `demo_admin`). They never
+touch `config.php` on disk, so committing from inside the Codespace will not
+leak them.
+
 ## Requirements
 
 - PHP 7.4 or newer with the PDO MySQL driver enabled

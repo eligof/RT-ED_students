@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  app:
+    image: mcr.microsoft.com/devcontainers/php:1-8.2-bookworm
+    command: sleep infinity
+    working_dir: /workspace
+    volumes:
+      - ..:/workspace:cached
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: rt_exam
+      DB_USER: rt_exam
+      DB_PASSWORD: demo_pass
+      ADMIN_USER: admin
+      ADMIN_PASS: demo_admin
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+
+  mysql:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root_pass
+      MYSQL_DATABASE: rt_exam
+      MYSQL_USER: rt_exam
+      MYSQL_PASSWORD: demo_pass
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "rt_exam", "-pdemo_pass"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  mysql_data:
